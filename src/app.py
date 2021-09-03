@@ -45,7 +45,7 @@ package_schema = PackageSchema()
 packages_schema = PackageSchema(many=True)
 
 #
-@app.route('/')
+@app.route('/rmapi')
 def hello():
   return 'api root'
 # Create a Package
@@ -65,20 +65,20 @@ def new_package():
   return package_schema.jsonify(new_package)
 
 # Get All Packages
-@app.route('/package', methods=['GET'])
+@app.route('/rmapi/package', methods=['GET'])
 def get_packages():
   all_packages = Package.query.all()
   result = packages_schema.dump(all_packages)
   return jsonify(result)
 
 # Get Single Package
-@app.route('/package/<id>', methods=['GET'])
+@app.route('/rmapi/package/<id>', methods=['GET'])
 def get_package(id):
   package = Package.query.get(id)
   return package_schema.jsonify(package)
 
 # Update a Package
-@app.route('/package/<id>', methods=['PUT'])
+@app.route('/rmapi/package/<id>', methods=['PUT'])
 def update_package(id):
   package_to_update = Package.query.get(id)
 
@@ -100,7 +100,7 @@ def update_package(id):
   return package_schema.jsonify(package_to_update)
 
 # Delete Package
-@app.route('/package/<id>', methods=['DELETE'])
+@app.route('/rmapi/package/<id>', methods=['DELETE'])
 def delete_package(id):
   package = Package.query.get(id)
   db.session.delete(package)
