@@ -1,0 +1,70 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rmapi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rmapi
+  name: rmapi
+  namespace: rmapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rmapi
+  template:
+    metadata:
+      labels:
+        app: rmapi
+    spec:
+      containers:
+      - image: jogaleins/rmapi:<TAG>
+        imagePullPolicy: Always
+        name: rmapi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: rmapi
+  name: rmapi
+  namespace: rmapi
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: rmapi
+  type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: null
+  name: rmapi-ing
+  namespace: rmapi
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - host: cloud-rm.duckdns.org
+    http:
+      paths:
+      - backend:
+          service:
+            name: rmapi
+            port:
+              number: 80
+        path: /rmapi
+        pathType: Prefix
+status:
+  loadBalancer: {}

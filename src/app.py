@@ -2,12 +2,15 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy 
 from flask_marshmallow import Marshmallow 
 import os
+#import pymysql
 
 # Init app
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 # Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db.sqlite')
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://username:password@localhost/db_name'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Init db
 db = SQLAlchemy(app)
@@ -41,6 +44,10 @@ class PackageSchema(ma.Schema):
 package_schema = PackageSchema()
 packages_schema = PackageSchema(many=True)
 
+#
+@app.route('/')
+def hello():
+  return 'api root'
 # Create a Package
 @app.route('/package', methods=['POST'])
 def new_package():
@@ -102,4 +109,4 @@ def delete_package(id):
   return package_schema.jsonify(package)
 # Run Server
 if __name__ == '__main__':
-  app.run(debug=True)
+  app.run(debug=False)
