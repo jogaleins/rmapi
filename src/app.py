@@ -49,7 +49,7 @@ packages_schema = PackageSchema(many=True)
 def hello():
   return 'api root'
 # Create a Package
-@app.route('/package', methods=['POST'])
+@app.route('/rmapi/package', methods=['POST'])
 def new_package():
   package = request.json['package']
   system = request.json['system']
