@@ -19,7 +19,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db.sqlite')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://k3s:k3s_123@192.168.1.200/rm'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-app.config['SECRET_KEY'] = 'your secret key'
+app.config['SECRET_KEY'] = 'nP1SklsZ5PpwwJzqlMSloA'
 
 # Init db
 db = SQLAlchemy(app)
