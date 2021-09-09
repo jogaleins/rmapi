@@ -4,4 +4,4 @@ Flask == 2.0.1
 flask-sqlalchemy
 flask-marshmallow
 marshmallow-sqlalchemy
-jwt
+PyJWT == 1.7.1
