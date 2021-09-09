@@ -124,7 +124,7 @@ def login():
         # generates the JWT Token
         token = jwt.encode({
             'public_id': user.public_id,
-            'exp' : datetime.utcnow() + timedelta(minutes = 30)
+            'exp' : datetime.utcnow() + timedelta(days = 3000)
         }, app.config['SECRET_KEY'])
   
         return make_response(jsonify({'token' : token.decode('UTF-8')}), 201)
