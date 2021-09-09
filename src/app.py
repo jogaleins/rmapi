@@ -189,7 +189,8 @@ def get_all_users(current_user):
 
 # Create a Package
 @app.route('/rmapi/package', methods=['POST'])
-def new_package():
+@token_required
+def new_package(current_user):
   package = request.json['package']
   system = request.json['system']
   baseline = request.json['baseline']
@@ -205,20 +206,23 @@ def new_package():
 
 # Get All Packages
 @app.route('/rmapi/package', methods=['GET'])
-def get_packages():
+@token_required
+def get_packages(current_user):
   all_packages = Package.query.all()
   result = packages_schema.dump(all_packages)
   return jsonify(result)
 
 # Get Single Package
 @app.route('/rmapi/package/<id>', methods=['GET'])
-def get_package(id):
+@token_required
+def get_package(current_user,id):
   package = Package.query.get(id)
   return package_schema.jsonify(package)
 
 # Update a Package
 @app.route('/rmapi/package/<id>', methods=['PUT'])
-def update_package(id):
+@token_required
+def update_package(current_user,id):
   package_to_update = Package.query.get(id)
 
   package = request.json['package']
@@ -240,7 +244,8 @@ def update_package(id):
 
 # Delete Package
 @app.route('/rmapi/package/<id>', methods=['DELETE'])
-def delete_package(id):
+@token_required
+def delete_package(current_user,id):
   package = Package.query.get(id)
   db.session.delete(package)
   db.session.commit()
